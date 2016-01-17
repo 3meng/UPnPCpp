@@ -1,0 +1,3 @@
+[submodule "3rdparty/TinyXml"]
+	path = 3rdparty/TinyXml
+	url = https://github.com/leethomason/tinyxml2.git
