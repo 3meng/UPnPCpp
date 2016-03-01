@@ -5,32 +5,36 @@
 #ifndef UPNPCPP_UTYPE_H
 #define UPNPCPP_UTYPE_H
 
-namespace UPnPCpp
-{
-    template<typename B, typename D>
-    struct UType
-    {
-        using type = D;
+#include "socket.h"
 
-    private:
-        // 添加约束, 限制B类型为D类型基类.
-        void constraint()
-        {
-            D *pd;
-            B *pb = static_cast<B *>(pd);
-        }
-    };
-
-    // 头文件以同样方式引入...
 #if defined(__WINDOWS)
-    // using HttpService = UType<HttpBase, WindowsHttpService>::type;
+
 #elif defined(__LINUX)
-    // using HttpService = UType<HttpBase, LinuxHttpService>::type;
+
 #elif defined(__OS_X)
-    // using HttpService = UType<HttpBase, OSXHttpService>::type;
+
 #else
-    // using HttpService = UType<HttpBase, HttpBase>::type;
+
+#include "placeholder.h"
+
 #endif
+
+namespace UPnP
+{
+    namespace Net
+    {
+#if defined(__WINDOWS)
+        //
+#elif defined(__LINUX)
+        // typedef BasicSocket<something> Socket;
+        // typedef BasicSocketUtils<something> SocketUtils;
+#elif defined(__OS_X)
+        //
+#else
+        typedef BasicSocket<SocketPlaceHolder> Socket;
+        typedef BasicSocketUtils<SocketUtilsPlaceHolder> SocketUtils;
+#endif
+    }
 }
 
 #endif //UPNPCPP_UTYPE_H
