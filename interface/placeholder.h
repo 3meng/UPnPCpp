@@ -34,11 +34,23 @@ namespace UPnP
             // 接收数据
             int Receive(void *buff, int len, unsigned int flags = 0) { return -1; }
 
+            // 发送到指定地址
+            int SendTo(const char *msg, int len, int flags, const SocketAddr &address, int toLen) { return -1; }
+
+            // 接收一个数据报数据
+            int ReceiveFrom(char *buff, int len, int flags, SocketAddr &address, int &fromLen) { return -1; }
+
             // 关闭套接字
             void Close() {  }
 
             // 停用套接字指定功能
             int Shutdown(int how) { return -1; }
+
+            // 加入一个组播
+            int AddMembership(const GroupRequest &req) { return -1; }
+
+            // 离开一个组播
+            int DropMembership(const GroupRequest &req) { return -1; }
 
             // 获取Socket选项
             int GetSocketOption(int level, int name, char *value, int *len) { return -1; }

@@ -20,6 +20,7 @@ namespace UPnP
 
         struct SocketAddr
         {
+            // 两个值都必须是网络字节序
             unsigned long int IP;
             unsigned short int Port;
         };
@@ -29,7 +30,14 @@ namespace UPnP
             std::string Name;
             std::list<std::string> Aliases;
             int AddressType;
-            std::list<std::string> AddressList;
+            std::list<std::string> AddressList; // 每个地址都是网络字节序
+        };
+
+        struct GroupRequest
+        {
+            // 两个值都必须是网络字节序
+            unsigned long int MultiAddress;
+            unsigned long int Interface;
         };
     }
 }

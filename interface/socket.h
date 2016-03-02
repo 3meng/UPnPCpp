@@ -39,13 +39,31 @@ namespace UPnP
             int Send(const void *msg, int len, int flags = 0) { return t.Send(msg, len, flags); }
 
             // 接收数据
-            int Recv(void *buff, int len, unsigned int flags = 0) { return t.Recv(buff, len, flags); }
+            int Receive(void *buff, int len, unsigned int flags = 0) { return t.Receive(buff, len, flags); }
+
+            // 发送到指定地址
+            int SendTo(const char *msg, int len, int flags, const SocketAddr &address, int toLen)
+            {
+                return t.SendTo(msg, len, flags, address, toLen);
+            }
+
+            // 接收一个数据报数据
+            int ReceiveFrom(char *buff, int len, int flags, SocketAddr &address, int &fromLen)
+            {
+                return t.ReceiveFrom(buff, len, flags, address, fromLen);
+            }
 
             // 关闭套接字
             void Close() { t.Close(); }
 
             // 停用套接字指定功能
             int Shutdown(int how) { return t.Shutdown(how); }
+
+            // 加入一个组播
+            int AddMembership(const GroupRequest &req) { return t.AddMembership(req); }
+
+            // 离开一个组播
+            int DropMembership(const GroupRequest &req) { return t.DropMembership(req); }
 
             // 获取Socket选项
             int GetSocketOption(int level, int name, char *value, int *len)
@@ -71,13 +89,13 @@ namespace UPnP
         {
         public:
             // 将参数指定的unsigned long正数转换为网络字符顺序
-            unsigned long int HtoNl(unsigned long int hostLong) { return T.HtoNl(hostLong); }
+            unsigned long int HtoNl(unsigned long int hostLong) { return T::HtoNl(hostLong); }
 
             // 获取本地主机名称
-            int GetHostName(std::string &hostname) { return T.GetHostName(hostname); }
+            int GetHostName(std::string &hostname) { return T::GetHostName(hostname); }
 
             // 根据主机名获取主机地址及相关信息
-            bool GetHostByName(const std::string &name, HostEnt &hostEnt) { return T.GetHostByName(name, hostEnt); }
+            bool GetHostByName(const std::string &name, HostEnt &hostEnt) { return T::GetHostByName(name, hostEnt); }
         };
     }
 }
