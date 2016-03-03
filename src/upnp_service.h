@@ -13,17 +13,20 @@
 namespace UPnP
 {
     // 使用回调响应客户端请求.对于HTTP请求,同时在回调中返回响应消息
-    typedef void (*UpnpCallback)(const Net::Socket &, const HttpRequest &);
+    typedef void (*OnHttpRequest)(const Net::Socket &, const HttpRequest &);
+
+    // 当一个HTTP响应信息到来时调用
+    typedef void (*OnHttpResponse)(const Net::Socket &, const HttpResponse &);
 
     class UpnpService
     {
         unsigned short int udpPort, tcpPort;
-        std::map<int, UpnpCallback> events;
+        std::map<int, OnHttpRequest> events;
 
     public:
-        UpnpService(unsigned short int u = 0, unsigned short int t = 0) : udpPort(u), tcpPort(t) { }
+        UpnpService(unsigned short int u = 0, unsigned short int t = 0) : udpPort(u), tcpPort(t), events() { }
 
-        UpnpCallback RegisterCallback(int id, UpnpCallback event)
+        OnHttpRequest RegisterCallback(int id, OnHttpRequest event)
         {
             auto ret = events.insert(std::pair(id, event));
             return ret.second ? ret.first : nullptr;
@@ -33,7 +36,7 @@ namespace UPnP
         int SendUdpMsg(const HttpRequest &request);
 
         // 通过TCP发送请求消息
-        int SendTcpMsg(const HttpRequest &request, HttpResponse &response);
+        int SendTcpMsg(const HttpRequest &request, OnHttpResponse);
     };
 }
 

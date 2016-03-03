@@ -11,7 +11,7 @@ int UpnpService::SendUdpMsg(const HttpRequest &request)
     return 0;
 }
 
-int UpnpService::SendTcpMsg(const HttpRequest &request, HttpResponse &response)
+int UpnpService::SendTcpMsg(const HttpRequest &request, OnHttpResponse response)
 {
     return 0;
 }
